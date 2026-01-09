@@ -48,23 +48,45 @@ namespace LibraryApp.Controllers
         // GET: Loans/Create
         public IActionResult Create()
         {
+            // Display "Title" in the dropdown instead of "Id"
             ViewData["BookId"] = new SelectList(_context.Books, "Id", "Title");
             return View();
         }
 
         // POST: Loans/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // This is the "Smart" version that updates IsAvailable
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,BookId,UserId,LoanDate,ReturnDate")] Loan loan)
         {
+            // 1. Find the book the user wants to borrow
+            var book = await _context.Books.FindAsync(loan.BookId);
+
+            // 2. Check if the book exists
+            if (book == null)
+            {
+                return NotFound();
+            }
+
+            // 3. Check if the book is already taken
+            if (book.IsAvailable == false)
+            {
+                ModelState.AddModelError("", "This book is currently borrowed by someone else.");
+            }
+
             if (ModelState.IsValid)
             {
+                // 4. Mark the book as NOT available
+                book.IsAvailable = false;
+                _context.Update(book);
+
+                // 5. Save the Loan
                 _context.Add(loan);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
+            // If error, reload the dropdown with "Title"
             ViewData["BookId"] = new SelectList(_context.Books, "Id", "Title", loan.BookId);
             return View(loan);
         }
@@ -82,13 +104,12 @@ namespace LibraryApp.Controllers
             {
                 return NotFound();
             }
+            // Display "Title" in dropdown
             ViewData["BookId"] = new SelectList(_context.Books, "Id", "Title", loan.BookId);
             return View(loan);
         }
 
         // POST: Loans/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,BookId,UserId,LoanDate,ReturnDate")] Loan loan)
@@ -118,6 +139,7 @@ namespace LibraryApp.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            // Display "Title" in dropdown
             ViewData["BookId"] = new SelectList(_context.Books, "Id", "Title", loan.BookId);
             return View(loan);
         }
@@ -155,14 +177,14 @@ namespace LibraryApp.Controllers
             {
                 _context.Loans.Remove(loan);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool LoanExists(int id)
         {
-          return (_context.Loans?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Loans?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

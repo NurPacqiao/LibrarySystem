@@ -20,10 +20,20 @@ namespace LibraryApp.Controllers
         }
 
         // GET: Books
-        public async Task<IActionResult> Index()
+        // GET: Books
+        public async Task<IActionResult> Index(string searchString)
         {
-            var libraryContext = _context.Books.Include(b => b.Author).Include(b => b.Genre);
-            return View(await libraryContext.ToListAsync());
+            // 1. Pobierz książki razem z Autorem i Gatunkiem
+            var books = _context.Books.Include(b => b.Author).Include(b => b.Genre).AsQueryable();
+
+            // 2. Jeśli użytkownik coś wpisał w wyszukiwarkę...
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                // ...przefiltruj listę (szukamy po Tytule)
+                books = books.Where(b => b.Title.Contains(searchString));
+            }
+
+            return View(await books.ToListAsync());
         }
 
         // GET: Books/Details/5
@@ -161,14 +171,14 @@ namespace LibraryApp.Controllers
             {
                 _context.Books.Remove(book);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool BookExists(int id)
         {
-          return (_context.Books?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Books?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }
