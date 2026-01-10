@@ -20,16 +20,12 @@ namespace LibraryApp.Controllers
         }
 
         // GET: Books
-        // GET: Books
         public async Task<IActionResult> Index(string searchString)
         {
-            // 1. Pobierz książki razem z Autorem i Gatunkiem
             var books = _context.Books.Include(b => b.Author).Include(b => b.Genre).AsQueryable();
 
-            // 2. Jeśli użytkownik coś wpisał w wyszukiwarkę...
             if (!String.IsNullOrEmpty(searchString))
             {
-                // ...przefiltruj listę (szukamy po Tytule)
                 books = books.Where(b => b.Title.Contains(searchString));
             }
 
@@ -59,14 +55,19 @@ namespace LibraryApp.Controllers
         // GET: Books/Create
         public IActionResult Create()
         {
-            ViewData["AuthorId"] = new SelectList(_context.Authors, "Id", "Id");
-            ViewData["GenreId"] = new SelectList(_context.Genres, "Id", "Id");
+            // 1. Create a temporary list with Full Name
+            var authorList = _context.Authors.Select(a => new
+            {
+                Id = a.Id,
+                FullName = a.FirstName + " " + a.LastName // Combine names here
+            });
+
+            ViewData["AuthorId"] = new SelectList(authorList, "Id", "FullName");
+            ViewData["GenreId"] = new SelectList(_context.Genres, "Id", "Name");
             return View();
         }
 
         // POST: Books/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Title,ISBN,AuthorId,GenreId,IsAvailable")] Book book)
@@ -77,8 +78,15 @@ namespace LibraryApp.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AuthorId"] = new SelectList(_context.Authors, "Id", "Id", book.AuthorId);
-            ViewData["GenreId"] = new SelectList(_context.Genres, "Id", "Id", book.GenreId);
+            // If error, reload the Full Name list
+            var authorList = _context.Authors.Select(a => new
+            {
+                Id = a.Id,
+                FullName = a.FirstName + " " + a.LastName
+            });
+
+            ViewData["AuthorId"] = new SelectList(authorList, "Id", "FullName", book.AuthorId);
+            ViewData["GenreId"] = new SelectList(_context.Genres, "Id", "Name", book.GenreId);
             return View(book);
         }
 
@@ -95,14 +103,20 @@ namespace LibraryApp.Controllers
             {
                 return NotFound();
             }
-            ViewData["AuthorId"] = new SelectList(_context.Authors, "Id", "Id", book.AuthorId);
-            ViewData["GenreId"] = new SelectList(_context.Genres, "Id", "Id", book.GenreId);
+
+            // Reload Full Name list for Edit
+            var authorList = _context.Authors.Select(a => new
+            {
+                Id = a.Id,
+                FullName = a.FirstName + " " + a.LastName
+            });
+
+            ViewData["AuthorId"] = new SelectList(authorList, "Id", "FullName", book.AuthorId);
+            ViewData["GenreId"] = new SelectList(_context.Genres, "Id", "Name", book.GenreId);
             return View(book);
         }
 
         // POST: Books/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Title,ISBN,AuthorId,GenreId,IsAvailable")] Book book)
@@ -132,8 +146,16 @@ namespace LibraryApp.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AuthorId"] = new SelectList(_context.Authors, "Id", "Id", book.AuthorId);
-            ViewData["GenreId"] = new SelectList(_context.Genres, "Id", "Id", book.GenreId);
+
+            // Reload Full Name list for Edit Error
+            var authorList = _context.Authors.Select(a => new
+            {
+                Id = a.Id,
+                FullName = a.FirstName + " " + a.LastName
+            });
+
+            ViewData["AuthorId"] = new SelectList(authorList, "Id", "FullName", book.AuthorId);
+            ViewData["GenreId"] = new SelectList(_context.Genres, "Id", "Name", book.GenreId);
             return View(book);
         }
 

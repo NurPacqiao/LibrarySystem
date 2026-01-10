@@ -1,22 +1,85 @@
-html {
-  font-size: 14px;
-}
-
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
-}
-
+/* 1. Global Page Background (Subtle Gradient) */
 body {
-  margin-bottom: 60px;
+    /* Soft Blue-Grey Gradient - looks very professional */
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    min-height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* 2. Custom Navbar Styling */
+.custom-navbar {
+    /* Dark Blue/Teal Gradient */
+    background: linear-gradient(to right, #2c3e50, #4ca1af); 
+    padding: 15px 0; /* More height */
+}
+
+/* Logo Text */
+.navbar-brand {
+    font-size: 1.8rem; /* Bigger */
+    font-weight: 800;  /* Extra Bold */
+    color: white !important;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Navigation Links */
+.navbar-nav .nav-link {
+    color: rgba(255, 255, 255, 0.85) !important;
+    font-size: 1.1rem;
+    font-weight: 600; /* Bold, but less than logo */
+    margin-right: 15px;
+    transition: color 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #ffffff !important;
+    transform: translateY(-2px); /* Slight lift effect */
+}
+
+/* 3. Main Content Card (The White Box) */
+.container main {
+    background-color: white;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1); /* Floating effect */
+    margin-top: 30px;
+    margin-bottom: 50px;
+}
+
+/* 4. Headers & Polish */
+h1 {
+    color: #2c3e50;
+    font-weight: 700;
+    margin-bottom: 25px;
+    border-bottom: 3px solid #4ca1af; /* Matching accent line */
+    display: inline-block;
+    padding-bottom: 5px;
+}
+
+h4 {
+    color: #6c757d;
+    margin-top: 20px;
+}
+
+/* 5. Inputs & Buttons */
+.form-control, .form-select {
+    border-radius: 10px;
+    padding: 12px;
+    border: 1px solid #ced4da;
+}
+
+.btn {
+    border-radius: 50px; /* Fully rounded buttons */
+    padding: 8px 24px;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+}
+
+/* Footer fix */
+.footer {
+    background-color: transparent;
+    border-top: none !important;
+    color: #555;
+    font-weight: 500;
 }

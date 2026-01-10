@@ -1,8 +1,50 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Dashboard";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4 mb-3">Library Management System</h1>
+    <p class="lead mb-5">
+        Welcome to your digital library. Manage your collection, track active loans, and organize authors efficiently.
+    </p>
+
+    <div class="row justify-content-center">
+
+        <div class="col-md-3 mb-4">
+            <div class="card h-100 border-0 shadow-sm" style="background-color: #e3f2fd;">
+                <div class="card-body">
+                    <h5 class="card-title text-primary">Books</h5>
+                    <p class="card-text text-muted small">Browse and manage the book collection.</p>
+                    <a asp-controller="Books" asp-action="Index" class="btn btn-primary w-100">
+                        View Books
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 mb-4">
+            <div class="card h-100 border-0 shadow-sm" style="background-color: #e8f5e9;">
+                <div class="card-body">
+                    <h5 class="card-title text-success">Loans</h5>
+                    <p class="card-text text-muted small">Check in/out books and track due dates.</p>
+                    <a asp-controller="Loans" asp-action="Create" class="btn btn-success w-100">
+                        New Loan
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 mb-4">
+            <div class="card h-100 border-0 shadow-sm" style="background-color: #fff3e0;">
+                <div class="card-body">
+                    <h5 class="card-title text-warning">Authors</h5>
+                    <p class="card-text text-muted small">Manage author profiles and details.</p>
+                    <a asp-controller="Authors" asp-action="Index" class="btn btn-warning w-100 text-white">
+                        Manage Authors
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
 </div>

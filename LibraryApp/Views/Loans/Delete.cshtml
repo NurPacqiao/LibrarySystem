@@ -11,35 +11,28 @@
     <h4>Loan</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Book)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Book.Title)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.UserId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.UserId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.LoanDate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.LoanDate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ReturnDate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ReturnDate)
-        </dd>
+        <dt class="col-sm-2">Book</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.Book.Title)</dd>
+
+        <dt class="col-sm-2">User ID</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.UserId)</dd>
+
+        <dt class="col-sm-2">Loan Date</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.LoanDate)</dd>
+
+        <dt class="col-sm-2">Return Date</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.ReturnDate)</dd>
     </dl>
-    
+
     <form asp-action="Delete">
         <input type="hidden" asp-for="Id" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
+        <div class="mt-4 d-flex gap-3">
+            <button type="submit" class="btn btn-danger rounded-pill px-4">
+                <i class="bi bi-trash"></i> Delete
+            </button>
+            <a asp-action="Index" class="btn btn-secondary rounded-pill px-4">
+                Cancel
+            </a>
+        </div>
     </form>
 </div>

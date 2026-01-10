@@ -8,42 +8,63 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/LibraryApp.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+    <style>
+        html,
+        body {
+            height: 100%;
+            overflow: hidden;
+        }
+    </style>
 </head>
 
-<body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+<body class="d-flex flex-column vh-100 overflow-hidden">
+
+    <header class="flex-shrink-0" style="z-index: 1000;">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark custom-navbar box-shadow">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">LibraryApp</a>
+
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    <i class="bi bi-book-half"></i> LibraryApp
+                </a>
+
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse"
                     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">
+                                <i class="bi bi-speedometer2"></i> Dashboard
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home"
-                                asp-action="Privacy">Privacy</a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Authors"
-                                asp-action="Index">Authors</a>
+                            <a class="nav-link" asp-area="" asp-controller="Books" asp-action="Index">
+                                <i class="bi bi-journal-text"></i> Books
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Genres"
-                                asp-action="Index">Genres</a>
+                            <a class="nav-link" asp-area="" asp-controller="Authors" asp-action="Index">
+                                <i class="bi bi-person-badge"></i> Authors
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Books"
-                                asp-action="Index">Books</a>
+                            <a class="nav-link" asp-area="" asp-controller="Genres" asp-action="Index">
+                                <i class="bi bi-tags"></i> Genres
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Loans"
-                                asp-action="Index">Loans</a>
+                            <a class="nav-link" asp-area="" asp-controller="Loans" asp-action="Index">
+                                <i class="bi bi-arrow-left-right"></i> Loans
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">
+                                <i class="bi bi-shield-lock"></i> Privacy
+                            </a>
                         </li>
                     </ul>
                     <partial name="_LoginPartial" />
@@ -51,17 +72,22 @@
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+
+    <div class="flex-grow-1 overflow-auto">
+        <div class="container py-4">
+            <main role="main">
+                @RenderBody()
+            </main>
+        </div>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2025 - LibraryApp - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <footer class="footer py-1 bg-white border-top flex-shrink-0" style="z-index: 1000;">
+        <div class="container text-center text-muted small">
+            &copy; 2026 LibraryApp <a asp-area="" asp-controller="Home" asp-action="Privacy"
+                class="text-decoration-none text-muted ms-2">Privacy Policy</a>
         </div>
     </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
