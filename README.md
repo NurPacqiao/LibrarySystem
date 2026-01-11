@@ -23,6 +23,23 @@ Aplikacja umożliwia administratorom i pracownikom biblioteki zarządzanie księ
 - **Responsywność:** Aplikacja dostosowana do urządzeń mobilnych i desktopowych.
 - **Walidacja:** Zabezpieczenie formularzy przed błędnymi danymi.
 
+## 🔑 Dane Dostępowe (Ważne dla Prowadzącego)
+
+Aplikacja zabezpiecza operacje modyfikacji danych (Create/Edit/Delete) autoryzacją. Niezalogowany użytkownik ma dostęp tylko do odczytu (Details/Index).
+
+Aby przetestować funkcje administracyjne, należy zalogować się na przygotowane konto testowe:
+
+- **Email:** `admin@test.com`
+- **Hasło:** `Admin123!`
+
+_(Można również zarejestrować nowe konto – każdy zalogowany użytkownik otrzymuje dostęp do funkcji zarządzania)._
+
+## ⚙️ Konfiguracja i API
+
+- **Baza Danych:** Projekt używa **SQLite** (`library.db`). Łańcuch połączenia (Connection String) znajduje się w pliku `appsettings.json`.
+- **API Endpoint:** Zgodnie z wymaganiami projekt udostępnia punkt końcowy API (CRUD) dla głównej encji (Książki), zwracający dane w formacie JSON:
+  - Adres: `/api/Api` (np. `http://localhost:5000/api/Api`)
+
 ## 🛠 Technologie
 
 - **Backend:** .NET 8.0 (ASP.NET Core MVC)
@@ -34,7 +51,7 @@ Aplikacja umożliwia administratorom i pracownikom biblioteki zarządzanie księ
 
 1.  **Sklonuj repozytorium:**
     ```bash
-    git clone [https://github.com/twoj-nick/LibraryApp.git](https://github.com/twoj-nick/LibraryApp.git)
+    git clone [https://github.com/Nurpacqiao/LibraryApp.git](https://github.com/Nurpacqiao/LibraryApp.git)
     ```
 2.  **Przejdź do folderu projektu:**
     ```bash
@@ -45,5 +62,7 @@ Aplikacja umożliwia administratorom i pracownikom biblioteki zarządzanie księ
     dotnet watch run
     ```
 4.  Otwórz przeglądarkę pod adresem: `http://localhost:5000`
+
+---
 
 &copy; 2026 LibraryApp
