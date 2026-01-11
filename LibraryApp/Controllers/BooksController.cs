@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using LibraryApp.Data;
 using LibraryApp.Models;
+using Microsoft.AspNetCore.Authorization; // 1. Added namespace for Authorization
 
 namespace LibraryApp.Controllers
 {
@@ -19,7 +20,7 @@ namespace LibraryApp.Controllers
             _context = context;
         }
 
-        // GET: Books
+        // GET: Books (Public Access)
         public async Task<IActionResult> Index(string searchString)
         {
             var books = _context.Books.Include(b => b.Author).Include(b => b.Genre).AsQueryable();
@@ -32,7 +33,7 @@ namespace LibraryApp.Controllers
             return View(await books.ToListAsync());
         }
 
-        // GET: Books/Details/5
+        // GET: Books/Details/5 (Public Access)
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Books == null)
@@ -52,14 +53,15 @@ namespace LibraryApp.Controllers
             return View(book);
         }
 
-        // GET: Books/Create
+        // GET: Books/Create (Restricted)
+        [Authorize] // 2. Added Authorize
         public IActionResult Create()
         {
-            // 1. Create a temporary list with Full Name
+            // Create a temporary list with Full Name
             var authorList = _context.Authors.Select(a => new
             {
                 Id = a.Id,
-                FullName = a.FirstName + " " + a.LastName // Combine names here
+                FullName = a.FirstName + " " + a.LastName
             });
 
             ViewData["AuthorId"] = new SelectList(authorList, "Id", "FullName");
@@ -67,9 +69,10 @@ namespace LibraryApp.Controllers
             return View();
         }
 
-        // POST: Books/Create
+        // POST: Books/Create (Restricted)
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize] // 3. Added Authorize
         public async Task<IActionResult> Create([Bind("Id,Title,ISBN,AuthorId,GenreId,IsAvailable")] Book book)
         {
             if (ModelState.IsValid)
@@ -78,7 +81,6 @@ namespace LibraryApp.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            // If error, reload the Full Name list
             var authorList = _context.Authors.Select(a => new
             {
                 Id = a.Id,
@@ -90,7 +92,8 @@ namespace LibraryApp.Controllers
             return View(book);
         }
 
-        // GET: Books/Edit/5
+        // GET: Books/Edit/5 (Restricted)
+        [Authorize] // 4. Added Authorize
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Books == null)
@@ -104,7 +107,6 @@ namespace LibraryApp.Controllers
                 return NotFound();
             }
 
-            // Reload Full Name list for Edit
             var authorList = _context.Authors.Select(a => new
             {
                 Id = a.Id,
@@ -116,9 +118,10 @@ namespace LibraryApp.Controllers
             return View(book);
         }
 
-        // POST: Books/Edit/5
+        // POST: Books/Edit/5 (Restricted)
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize] // 5. Added Authorize
         public async Task<IActionResult> Edit(int id, [Bind("Id,Title,ISBN,AuthorId,GenreId,IsAvailable")] Book book)
         {
             if (id != book.Id)
@@ -147,7 +150,6 @@ namespace LibraryApp.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            // Reload Full Name list for Edit Error
             var authorList = _context.Authors.Select(a => new
             {
                 Id = a.Id,
@@ -159,7 +161,8 @@ namespace LibraryApp.Controllers
             return View(book);
         }
 
-        // GET: Books/Delete/5
+        // GET: Books/Delete/5 (Restricted)
+        [Authorize] // 6. Added Authorize
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Books == null)
@@ -179,9 +182,10 @@ namespace LibraryApp.Controllers
             return View(book);
         }
 
-        // POST: Books/Delete/5
+        // POST: Books/Delete/5 (Restricted)
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize] // 7. Added Authorize
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             if (_context.Books == null)

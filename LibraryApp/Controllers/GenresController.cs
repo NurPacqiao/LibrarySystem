@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using LibraryApp.Data;
 using LibraryApp.Models;
+using Microsoft.AspNetCore.Authorization; // Added for Authorization
 
 namespace LibraryApp.Controllers
 {
@@ -19,15 +20,15 @@ namespace LibraryApp.Controllers
             _context = context;
         }
 
-        // GET: Genres
+        // GET: Genres (Public)
         public async Task<IActionResult> Index()
         {
-              return _context.Genres != null ? 
-                          View(await _context.Genres.ToListAsync()) :
-                          Problem("Entity set 'LibraryContext.Genres'  is null.");
+            return _context.Genres != null ?
+                        View(await _context.Genres.ToListAsync()) :
+                        Problem("Entity set 'LibraryContext.Genres'  is null.");
         }
 
-        // GET: Genres/Details/5
+        // GET: Genres/Details/5 (Public)
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Genres == null)
@@ -45,17 +46,17 @@ namespace LibraryApp.Controllers
             return View(genre);
         }
 
-        // GET: Genres/Create
+        // GET: Genres/Create (Restricted)
+        [Authorize]
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Genres/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: Genres/Create (Restricted)
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> Create([Bind("Id,Name")] Genre genre)
         {
             if (ModelState.IsValid)
@@ -67,7 +68,8 @@ namespace LibraryApp.Controllers
             return View(genre);
         }
 
-        // GET: Genres/Edit/5
+        // GET: Genres/Edit/5 (Restricted)
+        [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Genres == null)
@@ -83,11 +85,10 @@ namespace LibraryApp.Controllers
             return View(genre);
         }
 
-        // POST: Genres/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: Genres/Edit/5 (Restricted)
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] Genre genre)
         {
             if (id != genre.Id)
@@ -118,7 +119,8 @@ namespace LibraryApp.Controllers
             return View(genre);
         }
 
-        // GET: Genres/Delete/5
+        // GET: Genres/Delete/5 (Restricted)
+        [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Genres == null)
@@ -136,9 +138,10 @@ namespace LibraryApp.Controllers
             return View(genre);
         }
 
-        // POST: Genres/Delete/5
+        // POST: Genres/Delete/5 (Restricted)
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             if (_context.Genres == null)
@@ -150,14 +153,14 @@ namespace LibraryApp.Controllers
             {
                 _context.Genres.Remove(genre);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool GenreExists(int id)
         {
-          return (_context.Genres?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Genres?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

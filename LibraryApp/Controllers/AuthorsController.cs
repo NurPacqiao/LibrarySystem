@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using LibraryApp.Data;
 using LibraryApp.Models;
+using Microsoft.AspNetCore.Authorization; // Added for Authorization
 
 namespace LibraryApp.Controllers
 {
@@ -19,15 +20,15 @@ namespace LibraryApp.Controllers
             _context = context;
         }
 
-        // GET: Authors
+        // GET: Authors (Public)
         public async Task<IActionResult> Index()
         {
-              return _context.Authors != null ? 
-                          View(await _context.Authors.ToListAsync()) :
-                          Problem("Entity set 'LibraryContext.Authors'  is null.");
+            return _context.Authors != null ?
+                        View(await _context.Authors.ToListAsync()) :
+                        Problem("Entity set 'LibraryContext.Authors'  is null.");
         }
 
-        // GET: Authors/Details/5
+        // GET: Authors/Details/5 (Public)
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Authors == null)
@@ -45,17 +46,17 @@ namespace LibraryApp.Controllers
             return View(author);
         }
 
-        // GET: Authors/Create
+        // GET: Authors/Create (Restricted)
+        [Authorize]
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Authors/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: Authors/Create (Restricted)
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> Create([Bind("Id,FirstName,LastName")] Author author)
         {
             if (ModelState.IsValid)
@@ -67,7 +68,8 @@ namespace LibraryApp.Controllers
             return View(author);
         }
 
-        // GET: Authors/Edit/5
+        // GET: Authors/Edit/5 (Restricted)
+        [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Authors == null)
@@ -83,11 +85,10 @@ namespace LibraryApp.Controllers
             return View(author);
         }
 
-        // POST: Authors/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: Authors/Edit/5 (Restricted)
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> Edit(int id, [Bind("Id,FirstName,LastName")] Author author)
         {
             if (id != author.Id)
@@ -118,7 +119,8 @@ namespace LibraryApp.Controllers
             return View(author);
         }
 
-        // GET: Authors/Delete/5
+        // GET: Authors/Delete/5 (Restricted)
+        [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Authors == null)
@@ -136,9 +138,10 @@ namespace LibraryApp.Controllers
             return View(author);
         }
 
-        // POST: Authors/Delete/5
+        // POST: Authors/Delete/5 (Restricted)
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             if (_context.Authors == null)
@@ -150,14 +153,14 @@ namespace LibraryApp.Controllers
             {
                 _context.Authors.Remove(author);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool AuthorExists(int id)
         {
-          return (_context.Authors?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Authors?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

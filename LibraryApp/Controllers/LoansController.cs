@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using LibraryApp.Data;
 using LibraryApp.Models;
+using Microsoft.AspNetCore.Authorization; // Added for Authorization
 
 namespace LibraryApp.Controllers
 {
@@ -19,14 +20,14 @@ namespace LibraryApp.Controllers
             _context = context;
         }
 
-        // GET: Loans
+        // GET: Loans (Public)
         public async Task<IActionResult> Index()
         {
             var libraryContext = _context.Loans.Include(l => l.Book);
             return View(await libraryContext.ToListAsync());
         }
 
-        // GET: Loans/Details/5
+        // GET: Loans/Details/5 (Public)
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Loans == null)
@@ -45,7 +46,8 @@ namespace LibraryApp.Controllers
             return View(loan);
         }
 
-        // GET: Loans/Create
+        // GET: Loans/Create (Restricted)
+        [Authorize]
         public IActionResult Create()
         {
             // Display "Title" in the dropdown instead of "Id"
@@ -53,10 +55,10 @@ namespace LibraryApp.Controllers
             return View();
         }
 
-        // POST: Loans/Create
-        // This is the "Smart" version that updates IsAvailable
+        // POST: Loans/Create (Restricted)
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> Create([Bind("Id,BookId,UserId,LoanDate,ReturnDate")] Loan loan)
         {
             // 1. Find the book the user wants to borrow
@@ -91,7 +93,8 @@ namespace LibraryApp.Controllers
             return View(loan);
         }
 
-        // GET: Loans/Edit/5
+        // GET: Loans/Edit/5 (Restricted)
+        [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Loans == null)
@@ -109,9 +112,10 @@ namespace LibraryApp.Controllers
             return View(loan);
         }
 
-        // POST: Loans/Edit/5
+        // POST: Loans/Edit/5 (Restricted)
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> Edit(int id, [Bind("Id,BookId,UserId,LoanDate,ReturnDate")] Loan loan)
         {
             if (id != loan.Id)
@@ -144,7 +148,8 @@ namespace LibraryApp.Controllers
             return View(loan);
         }
 
-        // GET: Loans/Delete/5
+        // GET: Loans/Delete/5 (Restricted)
+        [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Loans == null)
@@ -163,9 +168,10 @@ namespace LibraryApp.Controllers
             return View(loan);
         }
 
-        // POST: Loans/Delete/5
+        // POST: Loans/Delete/5 (Restricted)
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             if (_context.Loans == null)
