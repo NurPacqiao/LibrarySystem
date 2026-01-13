@@ -47,7 +47,7 @@ namespace LibraryApp.Controllers
         }
 
         // GET: Genres/Create (Restricted)
-        [Authorize]
+        [Authorize(Policy = "AdminOnly")]
         public IActionResult Create()
         {
             return View();
@@ -69,7 +69,7 @@ namespace LibraryApp.Controllers
         }
 
         // GET: Genres/Edit/5 (Restricted)
-        [Authorize]
+        [Authorize(Policy = "AdminOnly")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Genres == null)
@@ -88,7 +88,7 @@ namespace LibraryApp.Controllers
         // POST: Genres/Edit/5 (Restricted)
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize]
+        [Authorize(Policy = "AdminOnly")]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] Genre genre)
         {
             if (id != genre.Id)
@@ -120,7 +120,7 @@ namespace LibraryApp.Controllers
         }
 
         // GET: Genres/Delete/5 (Restricted)
-        [Authorize]
+        [Authorize(Policy = "AdminOnly")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Genres == null)
@@ -141,7 +141,7 @@ namespace LibraryApp.Controllers
         // POST: Genres/Delete/5 (Restricted)
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        [Authorize]
+        [Authorize(Policy = "AdminOnly")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             if (_context.Genres == null)

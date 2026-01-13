@@ -54,7 +54,7 @@ namespace LibraryApp.Controllers
         }
 
         // GET: Books/Create (Restricted)
-        [Authorize] // 2. Added Authorize
+        [Authorize(Policy = "AdminOnly")] // 2. Added Authorize
         public IActionResult Create()
         {
             // Create a temporary list with Full Name
@@ -72,7 +72,7 @@ namespace LibraryApp.Controllers
         // POST: Books/Create (Restricted)
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize] // 3. Added Authorize
+        [Authorize(Policy = "AdminOnly")] // 3. Added Authorize
         public async Task<IActionResult> Create([Bind("Id,Title,ISBN,AuthorId,GenreId,IsAvailable")] Book book)
         {
             if (ModelState.IsValid)
@@ -93,7 +93,7 @@ namespace LibraryApp.Controllers
         }
 
         // GET: Books/Edit/5 (Restricted)
-        [Authorize] // 4. Added Authorize
+        [Authorize(Policy = "AdminOnly")] // 4. Added Authorize
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Books == null)
@@ -121,7 +121,7 @@ namespace LibraryApp.Controllers
         // POST: Books/Edit/5 (Restricted)
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize] // 5. Added Authorize
+        [Authorize(Policy = "AdminOnly")] // 5. Added Authorize
         public async Task<IActionResult> Edit(int id, [Bind("Id,Title,ISBN,AuthorId,GenreId,IsAvailable")] Book book)
         {
             if (id != book.Id)
@@ -162,7 +162,7 @@ namespace LibraryApp.Controllers
         }
 
         // GET: Books/Delete/5 (Restricted)
-        [Authorize] // 6. Added Authorize
+        [Authorize(Policy = "AdminOnly")] // 6. Added Authorize
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Books == null)
@@ -185,7 +185,7 @@ namespace LibraryApp.Controllers
         // POST: Books/Delete/5 (Restricted)
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        [Authorize] // 7. Added Authorize
+        [Authorize(Policy = "AdminOnly")] // 7. Added Authorize
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             if (_context.Books == null)

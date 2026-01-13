@@ -4,7 +4,7 @@ Projekt stworzony w ramach zajęć "Bazy Danych i Aplikacje Internetowe". Jest t
 
 ## 📋 Opis Projektu
 
-Aplikacja umożliwia administratorom i pracownikom biblioteki zarządzanie księgozbiorem, autorami, gatunkami oraz procesem wypożyczania książek. System posiada nowoczesny, responsywny interfejs użytkownika oraz w pełni funkcjonalny system uwierzytelniania.
+Aplikacja umożliwia administratorom i pracownikom biblioteki zarządzanie księgozbiorem, autorami, gatunkami oraz procesem wypożyczania książek. System posiada nowoczesny, responsywny interfejs użytkownika oraz w pełni funkcjonalny system uwierzytelniania z podziałem na role.
 
 ## 🚀 Zrealizowane Funkcjonalności
 
@@ -13,8 +13,8 @@ Aplikacja umożliwia administratorom i pracownikom biblioteki zarządzanie księ
 - **Dashboard:** Centralny panel startowy z szybkim dostępem do kluczowych sekcji.
 - **Książki:** Pełna obsługa (CRUD) – dodawanie, edycja, usuwanie i przeglądanie książek.
 - **Wyszukiwanie:** Możliwość filtrowania książek po tytule.
-- **Wypożyczenia:** System rejestracji wypożyczeń i zwrotów z datami.
-- **Autorzy i Gatunki:** Zarządzanie metadanymi bibliotecznymi.
+- **Wypożyczenia:** System rejestracji wypożyczeń i zwrotów (dostępny dla użytkowników).
+- **Autorzy i Gatunki:** Zarządzanie metadanymi bibliotecznymi (tylko dla administratora).
 
 ### 🔹 Bezpieczeństwo i UI
 
@@ -23,16 +23,20 @@ Aplikacja umożliwia administratorom i pracownikom biblioteki zarządzanie księ
 - **Responsywność:** Aplikacja dostosowana do urządzeń mobilnych i desktopowych.
 - **Walidacja:** Zabezpieczenie formularzy przed błędnymi danymi.
 
-## 🔑 Dane Dostępowe (Ważne dla Prowadzącego)
+## 🔑 Dane Dostępowe i Uprawnienia (Ważne dla Prowadzącego)
 
-Aplikacja zabezpiecza operacje modyfikacji danych (Create/Edit/Delete) autoryzacją. Niezalogowany użytkownik ma dostęp tylko do odczytu (Details/Index).
+Aplikacja posiada zaimplementowany system ról i polityk bezpieczeństwa (`AdminOnly`):
 
-Aby przetestować funkcje administracyjne, należy zalogować się na przygotowane konto testowe:
+1.  **Administrator (`admin@test.com`):** Pełny dostęp do edycji, usuwania i dodawania (Książki, Autorzy, Gatunki, Wypożyczenia).
+2.  **Zalogowany Użytkownik:** Dostęp do modułu Wypożyczeń (Loans) - możliwość wypożyczania książek. Brak dostępu do edycji zasobów biblioteki.
+3.  **Gość (Niezalogowany):** Dostęp tylko do odczytu (przeglądanie listy książek i szczegółów).
+
+**Konto Administratora (do testowania edycji):**
 
 - **Email:** `admin@test.com`
 - **Hasło:** `Admin123!`
 
-_(Można również zarejestrować nowe konto – każdy zalogowany użytkownik otrzymuje dostęp do funkcji zarządzania)._
+_(Rejestracja nowego konta tworzy użytkownika ze standardowymi uprawnieniami, który nie może edytować bazy książek)._
 
 ## ⚙️ Konfiguracja i API
 
@@ -51,17 +55,21 @@ _(Można również zarejestrować nowe konto – każdy zalogowany użytkownik o
 
 1.  **Sklonuj repozytorium:**
     ```bash
-    git clone [https://github.com/Nurpacqiao/LibraryApp.git](https://github.com/Nurpacqiao/LibraryApp.git)
+    git clone https://github.com/Nurpacqiao/LibrarySystem.git
     ```
 2.  **Przejdź do folderu projektu:**
     ```bash
-    cd LibraryApp
+    cd LibrarySystem
     ```
-3.  **Uruchom aplikację:**
+3.  **Przywróć bazę danych (Wymagane po sklonowaniu):**
+    ```bash
+    dotnet ef database update
+    ```
+4.  **Uruchom aplikację:**
     ```bash
     dotnet watch run
     ```
-4.  Otwórz przeglądarkę pod adresem: `http://localhost:5000`
+5.  Otwórz przeglądarkę pod adresem: `http://localhost:5000`
 
 ---
 

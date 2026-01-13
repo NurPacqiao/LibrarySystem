@@ -47,7 +47,7 @@ namespace LibraryApp.Controllers
         }
 
         // GET: Authors/Create (Restricted)
-        [Authorize]
+        [Authorize(Policy = "AdminOnly")]
         public IActionResult Create()
         {
             return View();
@@ -56,7 +56,7 @@ namespace LibraryApp.Controllers
         // POST: Authors/Create (Restricted)
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize]
+        [Authorize(Policy = "AdminOnly")]
         public async Task<IActionResult> Create([Bind("Id,FirstName,LastName")] Author author)
         {
             if (ModelState.IsValid)
@@ -69,7 +69,7 @@ namespace LibraryApp.Controllers
         }
 
         // GET: Authors/Edit/5 (Restricted)
-        [Authorize]
+        [Authorize(Policy = "AdminOnly")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Authors == null)
@@ -88,7 +88,7 @@ namespace LibraryApp.Controllers
         // POST: Authors/Edit/5 (Restricted)
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize]
+        [Authorize(Policy = "AdminOnly")]
         public async Task<IActionResult> Edit(int id, [Bind("Id,FirstName,LastName")] Author author)
         {
             if (id != author.Id)
@@ -120,7 +120,7 @@ namespace LibraryApp.Controllers
         }
 
         // GET: Authors/Delete/5 (Restricted)
-        [Authorize]
+        [Authorize(Policy = "AdminOnly")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Authors == null)
@@ -141,7 +141,7 @@ namespace LibraryApp.Controllers
         // POST: Authors/Delete/5 (Restricted)
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        [Authorize]
+        [Authorize(Policy = "AdminOnly")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             if (_context.Authors == null)
