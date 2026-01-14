@@ -20,14 +20,15 @@ namespace LibraryApp.Controllers
             _context = context;
         }
 
-        // GET: Books (Public Access)
+        // GET: Books (Public Access)// GET: Books (Public Access)
         public async Task<IActionResult> Index(string searchString)
         {
             var books = _context.Books.Include(b => b.Author).Include(b => b.Genre).AsQueryable();
 
             if (!String.IsNullOrEmpty(searchString))
             {
-                books = books.Where(b => b.Title.Contains(searchString));
+                // FIX: Add .ToUpper() to both sides to make it case-insensitive
+                books = books.Where(b => b.Title.ToUpper().Contains(searchString.ToUpper()));
             }
 
             return View(await books.ToListAsync());
