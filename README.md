@@ -23,7 +23,7 @@ Aplikacja umożliwia administratorom i pracownikom biblioteki zarządzanie księ
 - **Responsywność:** Aplikacja dostosowana do urządzeń mobilnych i desktopowych.
 - **Walidacja:** Zabezpieczenie formularzy przed błędnymi danymi.
 
-## 🔑 Dane Dostępowe i Uprawnienia (Ważne dla Prowadzącego)
+## 🔑 Dane Dostępowe i Uprawnienia
 
 Aplikacja posiada zaimplementowany system ról i polityk bezpieczeństwa (`AdminOnly`):
 
@@ -31,7 +31,7 @@ Aplikacja posiada zaimplementowany system ról i polityk bezpieczeństwa (`Admin
 2.  **Zalogowany Użytkownik:** Dostęp do modułu Wypożyczeń (Loans) - możliwość wypożyczania książek. Brak dostępu do edycji zasobów biblioteki.
 3.  **Gość (Niezalogowany):** Dostęp tylko do odczytu (przeglądanie listy książek i szczegółów).
 
-**Konto Administratora (do testowania edycji):**
+**Konto Administratora:**
 
 - **Email:** `admin@test.com`
 - **Hasło:** `Admin123!`
