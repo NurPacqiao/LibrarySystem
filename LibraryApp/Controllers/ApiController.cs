@@ -17,7 +17,7 @@ namespace LibraryApp.Controllers
         }
 
 
-        // 1. READ (Odczyt - to co już miałeś)
+        // 1. READ
         // GET: api/Api
         [HttpGet]
         public async Task<IActionResult> GetBooks()
@@ -40,7 +40,7 @@ namespace LibraryApp.Controllers
             return Ok(result);
         }
 
-        // GET: api/Api/5 (Pobranie jednej książki)
+        // GET: api/Api/5
         [HttpGet("{id}")]
         public async Task<IActionResult> GetBook(int id)
         {
@@ -55,7 +55,7 @@ namespace LibraryApp.Controllers
         }
 
 
-        // 2. CREATE (Dodawanie)
+        // 2. CREATE
         // POST: api/Api
         [HttpPost]
         public async Task<ActionResult<Book>> PostBook(Book book)
@@ -66,7 +66,7 @@ namespace LibraryApp.Controllers
             return CreatedAtAction("GetBook", new { id = book.Id }, book);
         }
 
-        // 3. UPDATE (Edycja)
+        // 3. UPDATE
         // PUT: api/Api/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutBook(int id, Book book)
@@ -98,7 +98,7 @@ namespace LibraryApp.Controllers
         }
 
 
-        // 4. DELETE (Usuwanie)
+        // 4. DELETE
         // DELETE: api/Api/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteBook(int id)

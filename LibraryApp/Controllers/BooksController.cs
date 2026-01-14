@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using LibraryApp.Data;
 using LibraryApp.Models;
-using Microsoft.AspNetCore.Authorization; // 1. Added namespace for Authorization
+using Microsoft.AspNetCore.Authorization;
 
 namespace LibraryApp.Controllers
 {
