@@ -1,75 +1,75 @@
-# 📚 System Zarządzania Biblioteką (LibraryApp)
+# 📚 Library Management System (LibraryApp)
 
-Projekt stworzony w ramach zajęć "Bazy Danych i Aplikacje Internetowe". Jest to nowoczesna aplikacja webowa typu Full-Stack służąca do kompleksowego zarządzania zasobami bibliotecznymi.
+It is a modern Full-Stack web application designed for comprehensive management of library resources.
 
-## 📋 Opis Projektu
+## 📋 Project Description
 
-Aplikacja umożliwia administratorom i pracownikom biblioteki zarządzanie księgozbiorem, autorami, gatunkami oraz procesem wypożyczania książek. System posiada nowoczesny, responsywny interfejs użytkownika oraz w pełni funkcjonalny system uwierzytelniania z podziałem na role.
+The application enables administrators and library staff to manage the book collection, authors, genres, and the book lending process. The system features a modern, responsive user interface and a fully functional authentication system with role separation.
 
-## 🚀 Zrealizowane Funkcjonalności
+## 🚀 Implemented Features
 
-### 🔹 Główne moduły
+### 🔹 Main Modules
 
-- **Dashboard:** Centralny panel startowy z szybkim dostępem do kluczowych sekcji.
-- **Książki:** Pełna obsługa (CRUD) – dodawanie, edycja, usuwanie i przeglądanie książek.
-- **Wyszukiwanie:** Możliwość filtrowania książek po tytule.
-- **Wypożyczenia:** System rejestracji wypożyczeń i zwrotów (dostępny dla użytkowników).
-- **Autorzy i Gatunki:** Zarządzanie metadanymi bibliotecznymi (tylko dla administratora).
+- **Dashboard:** Central start panel with quick access to key sections.
+- **Books:** Full CRUD support – adding, editing, deleting, and browsing books.
+- **Search:** Ability to filter books by title.
+- **Loans:** System for registering loans and returns (available for users).
+- **Authors and Genres:** Management of library metadata (Administrator only).
 
-### 🔹 Bezpieczeństwo i UI
+### 🔹 Security & UI
 
-- **Uwierzytelnianie:** System logowania i rejestracji (ASP.NET Core Identity) z nowoczesnym podziałem graficznym (Split-Screen Design).
-- **Nowoczesny Interfejs:** Wykorzystanie **Bootstrap 5**, ikon **Bootstrap Icons** oraz niestandardowych stylów (gradienty, karty, cienie).
-- **Responsywność:** Aplikacja dostosowana do urządzeń mobilnych i desktopowych.
-- **Walidacja:** Zabezpieczenie formularzy przed błędnymi danymi.
+- **Authentication:** Login and registration system (ASP.NET Core Identity) with modern Split-Screen Design.
+- **Modern Interface:** Utilizes **Bootstrap 5**, **Bootstrap Icons**, and custom styles (gradients, cards, shadows).
+- **Responsiveness:** Application adapted for mobile and desktop devices.
+- **Validation:** Protection of forms against invalid data.
 
-## 🔑 Dane Dostępowe i Uprawnienia
+## 🔑 Access Credentials & Permissions
 
-Aplikacja posiada zaimplementowany system ról i polityk bezpieczeństwa (`AdminOnly`):
+The application implements a role and security policy system (`AdminOnly`):
 
-1.  **Administrator (`admin@test.com`):** Pełny dostęp do edycji, usuwania i dodawania (Książki, Autorzy, Gatunki, Wypożyczenia).
-2.  **Zalogowany Użytkownik:** Dostęp do modułu Wypożyczeń (Loans) - możliwość wypożyczania książek. Brak dostępu do edycji zasobów biblioteki.
-3.  **Gość (Niezalogowany):** Dostęp tylko do odczytu (przeglądanie listy książek i szczegółów).
+1.  **Administrator (`admin@test.com`):** Full access to edit, delete, and add (Books, Authors, Genres, Loans).
+2.  **Logged-in User:** Access to the Loans module - ability to borrow books. No access to edit library resources.
+3.  **Guest (Not logged in):** Read-only access (viewing the book list and details).
 
-**Konto Administratora:**
+**Administrator Account:**
 
 - **Email:** `admin@test.com`
-- **Hasło:** `Admin123!`
+- **Password:** `Admin123!`
 
-_(Rejestracja nowego konta tworzy użytkownika ze standardowymi uprawnieniami, który nie może edytować bazy książek)._
+_(Registering a new account creates a user with standard permissions who cannot edit the book database)._
 
-## ⚙️ Konfiguracja i API
+## ⚙️ Configuration & API
 
-- **Baza Danych:** Projekt używa **SQLite** (`library.db`). Łańcuch połączenia (Connection String) znajduje się w pliku `appsettings.json`.
-- **API Endpoint:** Zgodnie z wymaganiami projekt udostępnia punkt końcowy API (CRUD) dla głównej encji (Książki), zwracający dane w formacie JSON:
-  - Adres: `/api/Api` (np. `http://localhost:5000/api/Api`)
+- **Database:** The project uses **SQLite** (`library.db`). The connection string is located in the `appsettings.json` file.
+- **API Endpoint:** As per requirements, the project exposes an API endpoint (CRUD) for the main entity (Books), returning data in JSON format:
+  - Address: `/api/Api` (e.g., `http://localhost:5000/api/Api`)
 
-## 🛠 Technologie
+## 🛠 Technologies
 
 - **Backend:** .NET 8.0 (ASP.NET Core MVC)
-- **Baza danych:** SQLite (Entity Framework Core)
+- **Database:** SQLite (Entity Framework Core)
 - **Frontend:** Razor Views, Bootstrap 5, CSS3
-- **Narzędzia:** Visual Studio Code, Git
+- **Tools:** Visual Studio Code, Git
 
-## 💻 Jak uruchomić projekt
+## 💻 How to Run the Project
 
-1.  **Sklonuj repozytorium:**
+1.  **Clone the repository:**
     ```bash
-    git clone https://github.com/Nurpacqiao/LibrarySystem.git
+    git clone [https://github.com/Nurpacqiao/LibrarySystem.git](https://github.com/Nurpacqiao/LibrarySystem.git)
     ```
-2.  **Przejdź do folderu projektu:**
+2.  **Navigate to the project folder:**
     ```bash
     cd LibrarySystem
     ```
-3.  **Przywróć bazę danych (Wymagane po sklonowaniu):**
+3.  **Restore the database (Required after cloning):**
     ```bash
     dotnet ef database update
     ```
-4.  **Uruchom aplikację:**
+4.  **Run the application:**
     ```bash
     dotnet watch run
     ```
-5.  Otwórz przeglądarkę pod adresem: `http://localhost:5000`
+5.  Open the browser at: `http://localhost:5000`
 
 ---
 
